@@ -31,16 +31,16 @@ impl Instruction {
             }
             RotateRow { row, by } => {
                 let old_row = board[*row].clone();
-                for x in 0..old_row.len() {
-                    let mut i = ((x as i32 - *by as i32) % old_row.len() as i32) as usize;
-                    board[*row][x] = old_row[i];
+                for i in 0..old_row.len() {
+                    let new_index = (i + by) % old_row.len();
+                    board[*row][new_index] = old_row[i];
                 }
             }
             RotateColumn { col, by } => {
                 let old_col = board.iter().map(|v| v[*col]).collect_vec();
-                for y in 0..old_col.len() {
-                    let i = ((y as i32 - *by as i32) % old_col.len()) as usize;
-                    board[y][*col] = old_col[i];
+                for i in 0..old_col.len() {
+                    let new_index = (i + by) % old_col.len();
+                    board[new_index][*col] = old_col[i];
                 }
             }
         }
@@ -88,10 +88,12 @@ fn display(board: &Vec<Vec<bool>>) -> String {
 }
 
 pub fn p1() -> usize {
-    let mut board = vec![vec![false; 6]; 3];
+    let mut board = vec![vec![false; 50]; 6];
     for i in parse_input_lines!(Instruction) {
         i.transform(&mut board)
     }
     println!("{}", display(&board));
     board.iter().map(|r| r.iter().filter(|b| **b).count()).sum()
 }
+
+// Too lazy to properly implement part2, so I just read the screen
