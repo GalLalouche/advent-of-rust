@@ -1,0 +1,12 @@
+[package]
+name = "advent-2015"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+combine = "*"
+itertools = "*"
+md5 = "*"
+num = "*"
+strum = "*"
+strum_macros = "*"
